@@ -1,0 +1,37 @@
+h1 {
+    font-family: 'Crimson Text', serif;
+    font-size: 200%;
+    text-align: center;
+}
+
+body {
+    font-family: 'Open Sans Condensed', sans-serif;
+
+    text-align: center;
+
+
+}
+
+.trips {
+    float: left;
+    width: 45%;
+    padding: 20px;
+    margin: 10px;
+    background-color: lightgray;
+    border-radius: 25px;
+}
+
+a:link {
+    text-align: right;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+img.cover {
+    width: 45%;
+
+}
