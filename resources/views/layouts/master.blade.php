@@ -16,6 +16,7 @@
 
 <header>
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Open+Sans+Condensed:300" rel="stylesheet">
+    <h1>Travel Journal</h1>
 </header>
 
 <section>

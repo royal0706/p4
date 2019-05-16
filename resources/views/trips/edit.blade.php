@@ -6,13 +6,14 @@
 
 @section('content')
 
+    <a href='/' class='nav'>View All Entries</a>
 
-
-    <h1>Add Your Entry for {{ $trip->destination }}:</h1>
+    <h2>Edit Entry for {{ $trip->destination }}:</h2>
 
     <form method='POST' action='/trips/{{ $trip->id }}'>
         <div class='details'>* Required fields</div>
         {{ csrf_field() }}
+        {{ method_field('put') }}
 
         <label for='title'>* Destination</label>
         <input type='text' name='destination' id='destination' value='{{ old('destination') }}'>
@@ -24,35 +25,35 @@
 
 
         <label for='hotel'>* Hotel</label>
-        <input type='text' name='hotel' id='hotel'  value='{{ old('hotel') }}'>
+        <input type='text' name='hotel' id='hotel' value='{{ old('hotel') }}'>
         @include('includes.error-field', ['fieldName' => 'hotel'])
 
         <label for='meal'>* Best Meal</label>
-        <input type='text' name='meal' id='meal'  value='{{ old('meal') }}'>
+        <input type='text' name='meal' id='meal' value='{{ old('meal') }}'>
         @include('includes.error-field', ['fieldName' => 'meal'])
 
         <label for='attraction'>* Best Attraction</label>
-        <input type='text' name='attraction' id='attraction'  value='{{ old('attraction') }}'>
+        <input type='text' name='attraction' id='attraction' value='{{ old('attraction') }}'>
         @include('includes.error-field', ['fieldName' => 'attraction'])
 
         <label for='photo_url'>* Photo URL </label>
         <input type='text' name='photo_url' id='photo_url' value='{{ old('photo_url') }}'>
         @include('includes.error-field', ['fieldName' => 'photo_url'])
 
-        <input type='submit' class= 'btn btn-primary' value='Add book'>
 
-
-        {{--<label>Tags</label>
+        <label>Tags</label>
         @foreach($tags as $tag)
             <ul>
                 <li>
-                    <label><input {{ (in_array($tag->id, $bookTags)) ? 'checked' : '' }} type='checkbox' name='tags[]' value='{{ $tag->id }}'> {{ $tag->name }}<label>
+                    <label><input {{ (in_array($tag->id, $tripTags)) ? 'checked' : '' }} type='checkbox'
+                                  name='tags[]'
+                                  value='{{ $tag->id }}'> {{ $tag->name }}<label>
                 </li>
             </ul>
-        @endforeach --}}
+        @endforeach
 
+        <input type='submit' class='btn btn-primary' value='Save Changes'>
 
-        <input type='submit' class= 'btn btn-primary' value='Save Changes'>
     </form>
     @if(count($errors) > 0)
         <div class='alert alert-danger'>Please fix the errors above.</div>

@@ -29,7 +29,7 @@ class TripsTableSeeder extends Seeder
             $trip->created_at = Carbon\Carbon::now()->subDays($count)->toDateTimeString();
             $trip->updated_at = Carbon\Carbon::now()->subDays($count)->toDateTimeString();
             $trip->destination = $tripData[0];
-            $trip->traveler = $tripData[1];
+            $trip->traveler_id = $tripData[1];
             $trip->hotel = $tripData[2];
             $trip->meal = $tripData[3];
             $trip->attraction = $tripData[4];

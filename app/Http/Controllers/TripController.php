@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Trip;
+use App\Tag;
 
 class TripController extends Controller
 {
@@ -12,28 +13,29 @@ class TripController extends Controller
         $trips = Trip::orderBy('created_at')->get();
 
         return view('trips.index')->with([
-            'trips' => $trips,
+            'trips' => $trips
         ]);
     }
 
-    /*public function show($id)
+    public function show($id)
     {
-        $book = Trip::find($id);
+        $trip = Trip::find($id);
 
         if (!$trip) {
-            return redirect('/trips')->with(['alert' => 'The book you were looking for was not found.']);
+            return redirect('/')->with(['alert' => 'The trip you were looking for was not found.']);
         }
 
-        return view('books.show')->with([
-            'book' => $book
+        return view('trips.show')->with([
+            'trip' => $trip
         ]);
     }
-*/
 
-#GET books/create
     public function create()
     {
+        $tags = Tag::getForCheckboxes();
+
         return view('trips.create')->with([
+            'tags' => $tags
         ]);
     }
 
@@ -46,53 +48,45 @@ class TripController extends Controller
             'hotel' => 'required',
             'meal' => 'required',
             'attraction' => 'required',
-            'photo_url' => 'required'
+            'photo_url' => 'required',
         ]);
 
-        #$author = Author::find($request->author_id)->first();
-
-        # Instantiate a new Book Model object
         $trip = new Trip();
 
-        # Set the properties
-        # Note how each property corresponds to a field in the table
         $trip->destination = $request->destination;
         $trip->traveler_id = $request->traveler_id;
         $trip->hotel = $request->hotel;
         $trip->meal = $request->meal;
         $trip->attraction = $request->attraction;
-        $trip->photo_url = $request->photo_upload;
+        $trip->photo_url = $request->photo_url;
         $trip->save();
 
-        # Note: If validation fails, it will redirect the visitor back to the form page
-        # and none of the code that follows will execute.
+        $trip->tags()->sync($request->tags);
 
-        # Code will eventually go here to add the book to the database,
-        # but for now we'll just dump the form data to the page for proof of concept
-        return redirect('/trips/create')->with(['alert' => 'The book ' . $trip->destination . ' was added.']);
+        return redirect('/trips/create')->with(['alert' => 'Your trip to ' . $trip->destination . ' was added.']);
     }
 
-    /*
-    * GET /books/{id}/edit
-    */
     public function edit($id)
     {
-        $trip = Trip::find($id);
+        $trip = Trip::with('tags')->find($id);
 
         if (!$trip) {
             return redirect('/')->with([
-                'alert' => 'Book not found.'
+                'alert' => 'Trip not found.'
             ]);
         }
 
+        $tags = Tag::getForCheckboxes();
+
+        $tripTags = $trip->tags->pluck('id')->toArray();
+
         return view('trips.edit')->with([
-            'trip'=> $trip,
+            'trip' => $trip,
+            'tags' => $tags,
+            'tripTags' => $tripTags,
         ]);
     }
 
-    /*
-    * PUT /books/{id}
-    */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -104,64 +98,35 @@ class TripController extends Controller
             'photo_url' => 'required'
         ]);
 
-        $trip->destination = $request->input(destination);
-        $trip->traveler_id = $request->input(traveler_id);
-        $trip->hotel = $request->input(hotel);
-        $trip->meal = $request->input(meal);
-        $trip->attraction = $request->input(attraction);
-        $trip->photo_url = $request->input(photo_url);
-        $book->save();
+        $trip = Trip::find($id);
+
+        $trip->tags()->sync($request->tags);
+
+        $trip->destination = $request->input('destination');
+        $trip->traveler_id = $request->input('traveler_id');
+        $trip->hotel = $request->input('hotel');
+        $trip->meal = $request->input('meal');
+        $trip->attraction = $request->input('attraction');
+        $trip->photo_url = $request->input('photo_url');
+        $trip->save();
 
         return redirect('/trips/' . $id . '/edit')->with([
             'alert' => 'Your changes were saved.'
         ]);
     }
-}
-/*
-    public function search(Request $request)
+
+    public function read($id)
     {
-        $searchTerm = $request->session()->get('searchTerm', '');
-        $caseSensitive = $request->session()->get('caseSensitive', false);
-        $searchResults = $request->session()->get('searchResults', null);
+        $trip = Trip::find($id);
 
-        return view('books.search')->with([
-            'searchTerm' => $searchTerm,
-            'caseSensitive' => $caseSensitive,
-            'searchResults' => $searchResults,
-        ]);
-    }
-
-    public function searchProcess(Request $request)
-    {
-        $request->validate([
-            'searchTerm' => 'required'
-        ]);
-        # Start with an empty array of search results; books that
-        # match our search query will get added to this array
-        $searchResults = [];
-
-        # Store the searchTerm in a variable for easy access
-        # The second parameter (null) is what the variable
-        # will be set to *if* searchTerm is not in the request.
-        $searchTerm = $request->input('searchTerm', null);
-
-        # Only try and search *if* there's a searchTerm
-        if ($searchTerm) {
-            # Open the books.json data file
-            # database_path() is a Laravel helper to get the path to the database folder
-            # See https://laravel.com/docs/helpers for other path related helpers
-            $result = Trip::where('title', '=', $searchTerm)->get();
-
-            dd($result);
+        if (!$trip) {
+            return redirect('/')->with(['alert' => 'The trip you were looking for was not found.']);
         }
 
-        # Redirect back to the search page w/ the searchTerm *and* searchResults (if any) stored in the session
-        # Ref: https://laravel.com/docs/redirects#redirecting-with-flashed-session-data
-        return redirect('/index')->with([
-            'searchTerm' => $searchTerm,
-            'caseSensitive' => $request->has('caseSensitive'),
-            'searchResults' => $searchResults
+        return view('trips.read')->with([
+            'trip' => $trip
         ]);
     }
 
-} */
+}
+

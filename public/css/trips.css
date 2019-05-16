@@ -4,11 +4,10 @@ h1 {
     text-align: center;
 }
 
+
 body {
     font-family: 'Open Sans Condensed', sans-serif;
-
     text-align: center;
-
 
 }
 
@@ -31,7 +30,59 @@ ul {
     padding: 0;
 }
 
-img.cover {
+img.trip {
     width: 45%;
 
+}
+
+.tripActions li {
+    display: inline-block;
+}
+
+.tripActions li a {
+    text-decoration: none;
+    padding-top: 40px;
+    padding-right: 40px;
+    font-weight: bold;
+}
+
+.tags li {
+    display: inline-block;
+}
+
+.tags li a {
+    text-decoration: none;
+    padding-top: 40px;
+    padding-right: 40px;
+    font-weight: bold;
+}
+
+
+.required {
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+
+input[type=text]{
+    display: block;
+    margin : 0 auto;
+    margin-bottom: 20px;
+}
+
+div.error {
+    font-size: smaller;
+    font-style: italic;
+    color: red;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
+a.nav {
+    font-weight: bold;
+}
+
+.nav {
+    font-size: 120%;
+    padding-bottom: 20px;
 }

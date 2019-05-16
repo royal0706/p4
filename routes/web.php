@@ -12,17 +12,18 @@
 */
 
 Route::get('/trips/create', 'TripController@create');
-Route::post('/trips', 'TripController@store');
+Route::post('/', 'TripController@store');
 
+Route::get('/trips/{destination}', 'TripController@show');
 
 Route::get('/', 'TripController@index');
 
-Route::get('/trips/{id}', 'TripController@show');
+Route::get('/trips/{id}', 'TripController@read');
 
 Route::get('/trips/{id}/edit', 'TripController@edit');
+Route::put('/trips/{id}', 'TripController@update');
 
-
-Route::get('/debug', function () {
+/*Route::get('/debug', function () {
 
     $debug = [
         'Environment' => App::environment(),
@@ -37,7 +38,7 @@ Route::get('/debug', function () {
     */
     #$debug['MySQL connection config'] = config('database.connections.mysql');
 
-    try {
+    /*try {
         $databases = DB::select('SHOW DATABASES;');
         $debug['Database connection test'] = 'PASSED';
         $debug['Databases'] = array_column($databases, 'Database');
@@ -46,4 +47,4 @@ Route::get('/debug', function () {
     }
 
     dump($debug);
-});
+}); */

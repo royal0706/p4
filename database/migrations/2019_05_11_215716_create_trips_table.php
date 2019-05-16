@@ -23,7 +23,7 @@ class CreateTripsTable extends Migration
 
             # The rest of the columns...
             $table->string('destination')->nullable(); # Example of a column modifier
-            $table->string('traveler');
+            $table->string('traveler_id');
             $table->string('hotel');
             $table->string('meal');
             $table->string('attraction');
