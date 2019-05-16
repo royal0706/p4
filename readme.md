@@ -23,5 +23,5 @@ Google Fonts (Crimson Text, Open Sans Condensed)
 None.
 
 ## Notes for instructor
-I was unable to get my project to work on the production server (I keep receiving a 505: Server Error), even though I remember it working in earlier weeks when I first started the project. I tried all of the solutions listed on the Issues forum at https://github.com/susanBuck/dwa15-spring2019/issues/49, with no success. 
+I was unable to get my project to work on the production server (I keep receiving a 500: Server Error), even though I remember it working in earlier weeks when I first started the project. I tried all of the solutions listed on the Issues forum at https://github.com/susanBuck/dwa15-spring2019/issues/49, with no success. 
 
